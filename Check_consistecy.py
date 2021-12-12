@@ -83,7 +83,7 @@ def check_cosistency(xml_file):
             stack.push(xml[i])  # append to stack
         # check if it's closing tag
         elif isClosing(xml[i]):
-            if not (stack.is_empty() and matching(stack.peek(), xml[i])):
+            if (not stack.is_empty() and matching(stack.peek(), xml[i])):
                 stack.pop()
             elif (stack.is_empty()) or (not matching(stack.peek(), xml[i])):
                 print("Not Balanced!")
