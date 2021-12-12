@@ -22,46 +22,75 @@ class Stack:
     # returns if stack is empty or not
     def is_empty(self):
         return len(self.c) == 0
+    
+    # returns the top element of the stack
+    def peek(self):
+        if self.isEmpty():
+            raise Exception("Stack empty!")
+        return self.container[-1]  
 
+i = -1
+xml = []
 
-# Function to check whether two characters are opening and closing of same type.
-def pair(opening, closing):
-    if opening == '{' and closing == '}':
-        return True
-    elif opening == '[' and closing == ']':
-        return True
-    elif opening == '(' and closing == ')':
-        return True
-    elif opening == '<' and closing == '>':
-        return True
-    elif opening == '"' and closing == '"':
-        return True
-    else:
-        return False
+# check if oppening tag
+def isOpening(word):
+    return (word[0] == '<' and word[1] != '/' and word[-1] == '>')
 
+# check if closing tag
+def isClosing(word):
+    return (word[0] == '<' and word[1] == '/' and word[-1] == '>')
 
-# function for balancing parentheses
-def check_cosistency(exp):
+# Check matching
+def matching(opening, closing):
+    return (opening == closing[0] + closing[2:])
+
+# This function takes a file.txt and rearrange it in a list 
+def toList(xml_file):
+    file = ''
+
+    for i in xml_file:
+        file = file + str(i)
+
+    l = []
+    s = ''
+    for i in file:
+        if i == '<':
+            l.append(s.replace('\n', '').strip())
+            s = i
+        elif i == '>':
+            s += i
+            l.append(s.replace('\n', '').strip())
+            s = ''
+        else:
+            s += i
+
+    for i in range(len(l)):
+        if l[i] == '':
+            continue
+        xml.append(l[i])
+
+    return xml
+
+# function for ckecking balance 
+def check_cosistency(xml_file):
+    global i
     stack = Stack()
+    toList(xml_file)
     # loop to iterate over string
-    for i in exp:
+    while (i < (len(xml) - 1)):
+        i = i + 1
         # check if it's opening bracket
-        if i == '(' or i == '[' or i == '{' or i == '<' or i == '"':
-            stack.push(i)  # append to stack
+        if isOpening(xml[i]):
+            stack.push(xml[i])  # append to stack
         # check if it's closing bracket
-        elif i == ')' or i == ']' or i == '}' or i == '>' or i == '"':
-            popped = ""
-            if not stack.is_empty():
+        elif isClosing(xml[i]):
+            if not (stack.is_empty() and matching(stack.peek(), xml[i])):
                 stack.pop()
-            elif (stack.is_empty()) or (not pair(i, popped)):
+            elif (stack.is_empty()) or (not matching(stack.peek(), xml[i])):
                 print("Not Balanced!")
                 return
-    # nothing in stack means all is well/balanced ;)
+    # nothing in stack means all is well balanced
     if stack.is_empty():
         print("All Balanced!")
     else:
         print("Not Balanced!")
-
-
-# parsing a string value (expression) for balance check
-check_cosistency("[ksdk+(){}<.sdkjkff>()]")
