@@ -76,13 +76,12 @@ def check_cosistency(xml_file):
     global i
     stack = Stack()
     toList(xml_file)
-    # loop to iterate over string
     while (i < (len(xml) - 1)):
         i = i + 1
-        # check if it's opening bracket
+        # check if it's opening tag
         if isOpening(xml[i]):
             stack.push(xml[i])  # append to stack
-        # check if it's closing bracket
+        # check if it's closing tag
         elif isClosing(xml[i]):
             if not (stack.is_empty() and matching(stack.peek(), xml[i])):
                 stack.pop()
