@@ -71,5 +71,58 @@ class huffmancode:
 		root = heapq.heappop(self.heap)
 		current_code = ""
 		self.char_codes_2(root, current_code)
+   #replaceing the char with the codes
+	def encoder_data(self, xml_data):
+		encoded_text = ""
+		for character in xml_data:
+			encoded_text += self.codes[character]
+		return encoded_text
+
+    #adding a padding so they can be mulitple of 8
+	def padded_encode_data(self, encoded_text):
+		extra_padding = 8 - len(encoded_text) % 8
+		for i in range(extra_padding):
+			encoded_text += "0"
+
+		padded_info = "{0:08b}".format(extra_padding)
+		encoded_text = padded_info + encoded_text
+		return encoded_text
+
+
+	def byte_array(self, padded_encoded_text):
+		if(len(padded_encoded_text) % 8 != 0):
+			print("Encoded text not padded properly")
+			exit(0)
+
+		b = bytearray()
+		for i in range(0, len(padded_encoded_text), 8):
+			byte = padded_encoded_text[i:i+8]
+			b.append(int(byte, 2))
+		return b
+
+
+	def compress(self):
+		filename, file_extension = os.path.splitext(self.path)
+		output_path = filename + ".bin"
+
+		with open(self.path, 'r+') as file, open(output_path, 'wb') as output:
+			xml_data = file.read()
+			xml_data = xml_data.rstrip()
+
+			frequency = self.char_freq(xml_data)
+			self.makeque(frequency)
+			self.hufftree()
+			self.char_codes()
+
+			encoded_text = self.encoder_data(xml_data)
+			padded_encoded_text = self.padded_encode_data(encoded_text)
+
+			b = self.byte_array(padded_encoded_text)
+			output.write(bytes(b))
+
+		print("Compressed")
+		return output_path
+
+
 
 
