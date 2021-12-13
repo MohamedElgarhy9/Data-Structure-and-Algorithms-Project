@@ -1,6 +1,9 @@
 # importing "double-ended queue"
 from collections import deque
 
+i = -1
+xml = []
+
 
 # class for making a stack
 class Stack:
@@ -29,14 +32,12 @@ class Stack:
             raise Exception("Stack empty!")
         return self.container[-1]  
 
-i = -1
-xml = []
-
-# check if oppening tag
+    
+# check if it's an oppening tag
 def isOpening(word):
     return (word[0] == '<' and word[1] != '/' and word[-1] == '>')
 
-# check if closing tag
+# check if it's closing tag
 def isClosing(word):
     return (word[0] == '<' and word[1] == '/' and word[-1] == '>')
 
@@ -44,7 +45,7 @@ def isClosing(word):
 def matching(opening, closing):
     return (opening == closing[0] + closing[2:])
 
-# This function takes a file.txt and rearrange it in a list 
+# This function takes a string and rearrange it in a list 
 def toList(xml_file):
     file = ''
 
@@ -86,10 +87,10 @@ def check_cosistency(xml_file):
             if not (stack.is_empty() and matching(stack.peek(), xml[i])):
                 stack.pop()
             elif (stack.is_empty()) or (not matching(stack.peek(), xml[i])):
-                print("Not Balanced!")
+                return ("Not Balanced!")
                 return
     # nothing in stack means all is well balanced
     if stack.is_empty():
-        print("All Balanced!")
+        return ("All Balanced!")
     else:
-        print("Not Balanced!")
+        return ("Not Balanced!")
