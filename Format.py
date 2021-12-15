@@ -29,9 +29,9 @@ class Stack:
 
     # returns the top element of the stack
     def peek(self):
-        if self.isEmpty():
-            raise Exception("Stack empty!")
-        return self.container[-1]
+        if self.is_empty():
+            return None
+        return self.c[-1]
 
 
 # check if it's an oppening tag
@@ -87,16 +87,19 @@ def format(input_string):
     global level
     stack = Stack()
     toList(input_string)
+    s = ''
     while (i < (len(xml) - 1)):
         i = i + 1
         if is_Opening(xml[i]):
             stack.push(xml[i])
             level = level + 1
-            print('    ' * level + xml[i])
+            s+='    ' * level + xml[i] + '\n'
         elif is_Closing(xml[i]):
             if not (stack.is_empty() and matching(stack.peek(), xml[i])):
                 stack.pop()
                 level = level - 1
-                print('    ' * (level + 1) + xml[i])
+                s+='    ' * (level + 1) + xml[i] + '\n'
         elif is_String(xml[i]):
-            print('    ' * (level + 1) + xml[i])
+            s+='    ' * (level + 1) + xml[i] + '\n'
+    return s
+    
