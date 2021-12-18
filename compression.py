@@ -36,22 +36,7 @@ class huffmancode:
 				frequency[character] = 0
 			frequency[character] += 1
 		return frequency
-    #makeing the piroty qeue
-	def makeque(self, frequency):
-		for key in frequency:
-			node = self.HeapNode(key, frequency[key])
-			heapq.heappush(self.heap, node)
-            #building the huffman tree
-	def hufftree(self):
-		while(len(self.heap)>1):
-			node1 = heapq.heappop(self.heap)
-			node2 = heapq.heappop(self.heap)
-
-			merged = self.HeapNode(None, node1.freq + node2.freq)
-			merged.left = node1
-			merged.right = node2
-
-			heapq.heappush(self.heap, merged)
+ 
 
     #makeing the binary codes for each char
 	def char_codes_2(self, root, current_code):
@@ -110,8 +95,23 @@ class huffmancode:
 			xml_data = xml_data.rstrip()
 
 			frequency = self.char_freq(xml_data)
-			self.makeque(frequency)
-			self.hufftree()
+
+                        #makeing the piroty qeue
+			for key in frequency:
+				node = self.HeapNode(key, frequency[key])
+				heapq.heappush(self.heap, node)
+
+
+                       #building the huffman tree
+			while(len(self.heap)>1):
+				node1 = heapq.heappop(self.heap)
+				node2 = heapq.heappop(self.heap)
+
+				merged = self.HeapNode(None, node1.freq + node2.freq)
+				merged.left = node1
+				merged.right = node2
+
+				heapq.heappush(self.heap, merged)
 			self.char_codes()
 
 			encoded_text = self.encoder_data(xml_data)
@@ -122,6 +122,7 @@ class huffmancode:
 
 		print("Compressed")
 		return output_path
+
 
 
 
