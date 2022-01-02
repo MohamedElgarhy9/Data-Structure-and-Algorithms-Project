@@ -1,7 +1,7 @@
 # Data-Structure-and-Algorithms-Project
 Designing a GUI (Graphical User Interface) to visualize XML and json files
 The user can:
-* Check consistency of a xml file, consistency: The input XML may have inconsistencies 
+* Check consistency of a xml file: The input XML may have inconsistencies 
   like missing any of the closing and opening tags or not matching tags. 
 * Formatting (Prettifying) the XML: the XML file should be well formatted by keeping 
   the indentation for each level.
