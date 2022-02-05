@@ -5,6 +5,11 @@ from Check_consistecy import check_cosistency
 from Format import format
 from sys import exit
 from compression import huffmancode
+import networkx as nx
+from graph import edges
+import matplotlib.pyplot as plt
+
+
 
 data = ''
 out = ''
@@ -45,6 +50,15 @@ def formatxml():
     global json
     json = False
     out = format(data)
+    Output.delete(1.0, END)
+    Output.insert(END, out)
+
+def graphit():
+    out = edges(data)
+    G = nx.DiGraph()
+    G.add_edges_from(out)
+    nx.draw_networkx(G, with_labels=True)
+    plt.show()
     Output.delete(1.0, END)
     Output.insert(END, out)
 
@@ -136,10 +150,16 @@ Output.grid(row=4, column=0, columnspan=4, pady=2)
 exit = Button(ws,
               text="Exit",
               command=exit)
-exit.grid(row=5, column=2, columnspan=2, pady=2)
+exit.grid(row=5, column=2, columnspan=1, pady=2)
 
 save = Button(ws,
               text="Save",
               command=savetout)
 save.grid(row=5, column=0, columnspan=2, pady=2)
+
+graph = Button(ws,
+              text="Graph",
+              command=graphit)
+graph.grid(row=5, column=1, columnspan=2,  pady=2)
+
 ws.mainloop()
