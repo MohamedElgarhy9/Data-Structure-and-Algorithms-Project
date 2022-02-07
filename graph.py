@@ -39,10 +39,10 @@ def edges(xml):
     target = []
     for txt in x:
         indices = list(find_all(txt,'<id>'))
-        key = txt[indices[0]+4]
+        key = txt[indices[0]+4:txt[indices[0]+4:].find('</id>')+indices[0]+4]
         values = []
         for i in indices[1:]:
-            values.append(txt[i+4])
+            values.append(txt[i+4:txt[i+4:].find('</id>')+i+4])
         dic[key]=values
 
     for i in dic:
