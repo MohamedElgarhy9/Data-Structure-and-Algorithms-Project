@@ -15,5 +15,3 @@ The user can:
   -   who is the most active user (connected to lots of users)
   -   the mutual followers between 2 users
   -   for each user, suggest a list of users to follow (the followers of his followers)
-* Post search: given a specific word or topic, get the posts where this word or topic 
-  was mentioned. (in progress).
