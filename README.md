@@ -1,4 +1,4 @@
-# Data-Structure-and-Algorithms-Project
+# XML Formatter
 Designing a GUI (Graphical User Interface) to visualize XML and json files
 The user can:
 * Check consistency of a xml file: The input XML may have inconsistencies 
